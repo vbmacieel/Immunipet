@@ -1,3 +1,4 @@
+using AutoMapper;
 using Immunipet.API.Data;
 using Immunipet.API.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ public static class PetEndpointsExt
 {
     public static void MapPetEndpoints(this WebApplication app)
     {
+        var mapper = app.Services.GetService<IMapper>();
+
         app.MapGet("/pets", async (AppDbContext db) => Results.Ok(await db.Pets.ToListAsync()));
 
         app.MapGet("/pet/{id}", async (AppDbContext db, int id) =>
